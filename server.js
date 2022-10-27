@@ -48,3 +48,24 @@ var userPrompt = function () {
                 console.table(result);
                 userPrompt();
             })
+
+        }else if (answers.prompt === 'Add A Department') {
+            inquirer.prompt([{
+                type:'input',
+                name: 'department',
+                message: 'What is the Department name?',
+                validate: departmentInput => {
+                    if (departmentInput) {
+                        return true;
+                    }else {
+                        console.log('Add a Dept');
+                        return false;
+                    }
+                }
+            }]).then((answers) => {
+                db.query(`INSERT INTO department (name) VALUES (?)`, [answers.department], (err, result) => {
+                    if (err) throw err;
+                    console.log(`Added ${answers.department} to DB`)
+                    userPrompt();
+                });
+            })
