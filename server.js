@@ -34,3 +34,10 @@ var userPrompt = function () {
                 console.table(result);
                 userPrompt();
             });
+        } else if (answers.prompt === 'View All Employees') {
+            db.query(`SELECT * FROM employee`, (err,result) => {
+                if (err) throw err; 
+                console.log('Viewing All Employees: ');
+                console.table(result);
+                userPrompt();
+            })
