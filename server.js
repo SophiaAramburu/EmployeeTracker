@@ -26,3 +26,11 @@ var userPrompt = function () {
             ]
         }
     ])
+    .then ((answers) => {
+        if (answers.prompt === 'View All Departments') {
+            db.query(`SELECT * FROM department`, (err, result) => {
+                if (err) throw err;
+                console.log('Viewing All Departments: ');
+                console.table(result);
+                userPrompt();
+            });
