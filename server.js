@@ -41,3 +41,10 @@ var userPrompt = function () {
                 console.table(result);
                 userPrompt();
             })
+        }else if (answers.prompt === 'View All Roles') {
+            db.query(`SELECT * FROM roles`, (err,result) => {
+                if (err) throw err; 
+                console.log('Viewing All Roles: ');
+                console.table(result);
+                userPrompt();
+            })
