@@ -3,21 +3,19 @@
     "console.table": "^0.10.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "inquirer": "^9.1.4"
+    "inquirer": "8.2.4",
+    "mysql2": "^2.3.3"
+  },
+  "name": "EmployeeTracker",
+  "description": "module",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SophiaAramburu/EmployeeTracker"
   }
-},
-
-"name": "employeetracker",
-"description": "module",
-"version": "1.0.0",
-"main": "server.js",
-"scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "start": "node server.js"
-},
-
-
-"repository": {
-  "type": "git",
-  "url": "https://github.com/SophiaAramburu/EmployeeTracker"
-};
+}

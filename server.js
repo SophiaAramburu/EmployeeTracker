@@ -3,12 +3,12 @@ const db = require('./db/connection');
 
 
 db.connect(err => {
-    if(err) throw err;
-    console.log('Database connected.');
+   if(err) throw err;
+   console.log('Database connected.');
     userPrompt();
 })
 
-var userPrompt = function () {
+function userPrompt() {
     inquirer.prompt([
         {   
             type: "list",
@@ -29,21 +29,30 @@ var userPrompt = function () {
     .then ((answers) => {
         if (answers.prompt === 'View All Departments') {
             db.query(`SELECT * FROM department`, (err, result) => {
-                if (err) throw err;
+                if(err) {
+                    console.log(err);
+                    return err;
+                  }
                 console.log('Viewing All Departments: ');
                 console.table(result);
                 userPrompt();
             });
         } else if (answers.prompt === 'View All Employees') {
             db.query(`SELECT * FROM employee`, (err,result) => {
-                if (err) throw err; 
+                if(err) {
+                    console.log(err);
+                    return err;
+                  }
                 console.log('Viewing All Employees: ');
                 console.table(result);
                 userPrompt();
             })
         }else if (answers.prompt === 'View All Roles') {
             db.query(`SELECT * FROM roles`, (err,result) => {
-                if (err) throw err; 
+                if(err) {
+      console.log(err);
+      return err;
+    } 
                 console.log('Viewing All Roles: ');
                 console.table(result);
                 userPrompt();
@@ -64,14 +73,20 @@ var userPrompt = function () {
                 }
             }]).then((answers) => {
                 db.query(`INSERT INTO department (name) VALUES (?)`, [answers.department], (err, result) => {
-                    if (err) throw err;
+                    if(err) {
+      console.log(err);
+      return err;
+    }
                     console.log(`Added ${answers.department} to DB`)
                     userPrompt();
                 });
             })
         }else if (answers.prompt === 'Add Role') {
             db.query(`SELECT * FROM department`, (err, result) => {
-                if (err) throw err;
+                if(err) {
+      console.log(err);
+      return err;
+    }
 
                 inquirer.prompt([{
                     type: 'input',
@@ -118,7 +133,10 @@ var userPrompt = function () {
                     }
                 }
                 db.query(`INSERT INTO role (title, salary,department_id) VALUES (?,?,?)`, [answers.roles, answers.salary, department.id], (err,result) => {
-                    if (err) throw err;
+                    if(err) {
+      console.log(err);
+      return err;
+    }
                     console.log(`added ${answers.roles} to db`)
                     userPrompt();
                 })
@@ -127,7 +145,10 @@ var userPrompt = function () {
     } else if (answers.prompt === 'Add An Employee') {
         db.query(`SELECT * FROM employee, roles`, (err,result) => {
 
-            if (err) throw err;
+            if(err) {
+      console.log(err);
+      return err;
+    }
             inquirer.prompt([{
                 
                 type: 'input',
@@ -189,7 +210,10 @@ var userPrompt = function () {
                 }
             }
             db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?)`, [answers.firstName, answers.lastName, answers.manager.id], (err,result) => {
-                if (err) throw err;
+                if(err) {
+      console.log(err);
+      return err;
+    }
                 console.log(`added ${answers.firstName} and ${answers.lastName} to db`)
                 userPrompt();
             })
@@ -198,7 +222,10 @@ var userPrompt = function () {
     }else if (answers.prompt === 'Update Employee Role') {
         db.query(`SELECT * FROM employee, roles`, (err,result) => {
 
-            if (err) throw err;
+            if(err) {
+      console.log(err);
+      return err;
+    }
             inquirer.prompt([{
                 
                 type: 'input',
@@ -239,7 +266,10 @@ var userPrompt = function () {
                 }
             }
             db.query(`UPDATE employee SET ? WHERE ?`, [{role_id: role}, {last_name: name}], (err,result) => {
-                if (err) throw err;
+                if(err) {
+      console.log(err);
+      return err;
+    }
                 console.log(`added ${answers.employee} to db`)
                 userPrompt();
             });
@@ -252,4 +282,4 @@ var userPrompt = function () {
     })
 };
 
-userPrompt();
+// userPrompt()
