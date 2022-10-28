@@ -12,7 +12,7 @@ function userPrompt() {
     inquirer.prompt([
         {   
             type: "list",
-            name: "selection",
+            name: "answers",
             message: "Please select one of the following",
             choices: [
                 'View All Departments',
@@ -27,17 +27,16 @@ function userPrompt() {
         }
     ])
     .then ((answers) => {
-        if (answers.prompt === 'View All Departments') {
-            db.query(`SELECT * FROM department`, (err, result) => {
+        if (answers.answers === 'View All Departments') {
+            db.query(`SELECT * FROM business.department`, (err, result) => {
                 if(err) {
-                    console.log(err);
                     return err;
                   }
                 console.log('Viewing All Departments: ');
                 console.table(result);
                 userPrompt();
             });
-        } else if (answers.prompt === 'View All Employees') {
+        } else if (answers.answers === 'View All Employees') {
             db.query(`SELECT * FROM employee`, (err,result) => {
                 if(err) {
                     console.log(err);
@@ -47,8 +46,8 @@ function userPrompt() {
                 console.table(result);
                 userPrompt();
             })
-        }else if (answers.prompt === 'View All Roles') {
-            db.query(`SELECT * FROM roles`, (err,result) => {
+        }else if (answers.answers === 'View All Roles') {
+            db.query(`SELECT * FROM role`, (err,result) => {
                 if(err) {
       console.log(err);
       return err;
@@ -58,10 +57,10 @@ function userPrompt() {
                 userPrompt();
             })
 
-        }else if (answers.prompt === 'Add A Department') {
+        }else if (answers.answers === 'Add Department') {
             inquirer.prompt([{
                 type:'input',
-                name: 'department',
+                name: 'department_name',
                 message: 'What is the Department name?',
                 validate: departmentInput => {
                     if (departmentInput) {
@@ -81,7 +80,7 @@ function userPrompt() {
                     userPrompt();
                 });
             })
-        }else if (answers.prompt === 'Add Role') {
+        }else if (answers.answers === 'Add Role') {
             db.query(`SELECT * FROM department`, (err, result) => {
                 if(err) {
       console.log(err);
@@ -142,7 +141,7 @@ function userPrompt() {
                 })
             })
         });
-    } else if (answers.prompt === 'Add An Employee') {
+    } else if (answers.answers === 'Add An Employee') {
         db.query(`SELECT * FROM employee, roles`, (err,result) => {
 
             if(err) {
@@ -219,7 +218,7 @@ function userPrompt() {
             })
         })
         })
-    }else if (answers.prompt === 'Update Employee Role') {
+    }else if (answers.answers === 'Update Employee Role') {
         db.query(`SELECT * FROM employee, roles`, (err,result) => {
 
             if(err) {
@@ -275,11 +274,16 @@ function userPrompt() {
             });
         })
     });
-} else if (answers.prompt === 'LogOut'){
+} else if (answers.answers === 'LogOut'){
     db.end();
     console.log("Later!");
         }
     })
 };
 
-// userPrompt()
+db.connect((err) => {
+    if(err) throw err;
+    console.log("database connected.");
+    userPrompt()
+});
+

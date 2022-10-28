@@ -1,4 +1,4 @@
-USE buisness;
+USE business;
 
 INSERT INTO department (department_name)
 VALUES
