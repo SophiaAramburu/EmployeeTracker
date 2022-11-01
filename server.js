@@ -138,66 +138,46 @@ function userPrompt() {
                         console.log(err);
                         return err;
                     }
+
                     const managerChoices = employees.map(({id, first_name, last_name}) => ({
                         name: `${first_name} ${last_name}`, 
                         value: id
                     }));
-                    console.log(managerChoices);
-                    // inquirer.prompt([{
 
-                    //     type: 'input',
-                    //     name: 'firstName',
-                    //     message: 'Employees First Name: ',
-                    //     validate: firstNameInput => {
-                    //         if (firstNameInput) {
-                    //             return true;
-                    //         } else {
-                    //             console.log('Add a First Name');
-                    //             return false;
-                    //         }
-                    //     }
-                    // },
-                    // {
-                    //     type: 'input',
-                    //     name: 'lastName',
-                    //     message: 'Employees Last Name:',
-                    //     validate: lastNameInput => {
-                    //         if (lastNameInput) {
-                    //             return true;
-                    //         } else {
-                    //             console.log('Add a Last Name');
-                    //             return false;
-                    //         }
-                    //     }
-                    // },
-                    // {
-                    //     type: 'list',
-                    //     name: 'roles',
-                    //     message: 'Employees Role:',
-                    //     choices: () => {
-                    //         var array = [];
-                    //         for (var i = 0; i < result.length; i++) {
-                    //             array.push(result[i].title)
-                    //         }
-                    //         var newArray = [...new Set(array)];
-                    //         return newArray;
-                    //     }
-                    // },
-
-                    // {
-                    //     type: 'list',
-                    //     name: 'manager',
-                    //     message: 'Employees Manager:',
-                    //     validate: managerInput => {
-                    //         if (managerInput) {
-                    //             return true;
-                    //         } else {
-                    //             console.log('Add Employee Manager');
-                    //             return false;
-                    //         }
-                    //     }
-                    // }
-                    // ]).then((answers) => {
+                    inquirer.prompt([{
+                        type: 'input',
+                        name: 'firstName',
+                        message: 'Employees First Name: ',
+                        validate: firstNameInput => {
+                            if (firstNameInput) {
+                                return true;
+                            } else {
+                                console.log('Add a First Name');
+                                return false;
+                            }
+                        }
+                    },
+                    {
+                        type: 'input',
+                        name: 'lastName',
+                        message: 'Employees Last Name:',
+                        validate: lastNameInput => {
+                            if (lastNameInput) {
+                                return true;
+                            } else {
+                                console.log('Add a Last Name');
+                                return false;
+                            }
+                        }
+                    },
+                    {
+                        type: 'list',
+                        name: 'manager',
+                        message: 'Employees Manager:',
+                        choices: managerChoices,
+                    }
+                    ]).then((answers) => {
+                        console.log(answers);
                     //     for (var i = 0; i < result.length; i++) {
                     //         if (result[i].title === answers.roles) {
                     //             var roles = result[i];
@@ -211,7 +191,7 @@ function userPrompt() {
                     //         console.log(`added ${answers.firstName} and ${answers.lastName} to db`)
                     //         userPrompt();
                     //     })
-                    // })
+                    })
                 })
             } else if (answers.answers === 'Update Employee Role') {
                 db.query(`SELECT * FROM employee, roles`, (err, result) => {
