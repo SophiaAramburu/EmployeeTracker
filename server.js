@@ -146,7 +146,7 @@ function userPrompt() {
 
                     inquirer.prompt([{
                         type: 'input',
-                        name: 'firstName',
+                        name: 'first_name',
                         message: 'Employees First Name: ',
                         validate: firstNameInput => {
                             if (firstNameInput) {
@@ -159,7 +159,7 @@ function userPrompt() {
                     },
                     {
                         type: 'input',
-                        name: 'lastName',
+                        name: 'last_name',
                         message: 'Employees Last Name:',
                         validate: lastNameInput => {
                             if (lastNameInput) {
@@ -172,7 +172,7 @@ function userPrompt() {
                     },
                     {
                         type: 'list',
-                        name: 'manager',
+                        name: 'manager_id',
                         message: 'Employees Manager:',
                         choices: managerChoices,
                     }
