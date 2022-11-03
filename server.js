@@ -195,6 +195,23 @@ function userPrompt() {
                                 value: id
                             }))
                         })
+
+                        inquirer.prompt({
+                            type: "list",
+                            name: "role_id",
+                            message: "Choose a role for the employee!",
+                            choices: roleChoices
+
+                        }).then(({role_id}) => {
+                            let employee = {
+                                first_name, 
+                                last_name,
+                                manager_id,
+                                role_id
+                            }
+
+                            console.log(employee);
+                        })
                         
                     //     for (var i = 0; i < result.length; i++) {
                     //         if (result[i].title === answers.roles) {
