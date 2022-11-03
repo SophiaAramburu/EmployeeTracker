@@ -144,6 +144,8 @@ function userPrompt() {
                         value: id
                     }));
 
+                    managerChoices.unshift({name: "none", value: null})
+
                     inquirer.prompt([{
                         type: 'input',
                         name: 'first_name',
