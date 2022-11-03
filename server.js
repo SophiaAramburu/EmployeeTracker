@@ -182,7 +182,6 @@ function userPrompt() {
                         let first_name = answers.first_name
                         let last_name = answers.last_name
                         let manager_id = answers.manager_id
-                        let roleChoices
                         
                         db.query(`SELECT * FROM role`, (err, roles) => {
                             if (err) {
@@ -190,28 +189,30 @@ function userPrompt() {
                                 return err
                             }
 
-                            roleChoices = roles.map(({id, title}) => ({
+                            const roleChoices = roles.map(({id, title}) => ({
                                 name: title, 
                                 value: id
                             }))
+                            
+
+                            inquirer.prompt([{
+                                type: "list",
+                                name: "role_id",
+                                message: "Choose a role for the employee!",
+                                choices: roleChoices
+    
+                            }]).then(({role_id}) => {
+                                let employee = {
+                                    first_name, 
+                                    last_name,
+                                    manager_id,
+                                    role_id
+                                }
+    
+                                console.log(employee);
+                            })
                         })
 
-                        inquirer.prompt({
-                            type: "list",
-                            name: "role_id",
-                            message: "Choose a role for the employee!",
-                            choices: roleChoices
-
-                        }).then(({role_id}) => {
-                            let employee = {
-                                first_name, 
-                                last_name,
-                                manager_id,
-                                role_id
-                            }
-
-                            console.log(employee);
-                        })
                         
                     //     for (var i = 0; i < result.length; i++) {
                     //         if (result[i].title === answers.roles) {
