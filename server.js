@@ -179,7 +179,23 @@ function userPrompt() {
                         choices: managerChoices,
                     }
                     ]).then((answers) => {
-                        console.log(answers);
+                        let first_name = answers.first_name
+                        let last_name = answers.last_name
+                        let manager_id = answers.manager_id
+                        let roleChoices
+                        
+                        db.query(`SELECT * FROM role`, (err, roles) => {
+                            if (err) {
+                                console.log(err);
+                                return err
+                            }
+
+                            roleChoices = roles.map(({id, title}) => ({
+                                name: title, 
+                                value: id
+                            }))
+                        })
+                        
                     //     for (var i = 0; i < result.length; i++) {
                     //         if (result[i].title === answers.roles) {
                     //             var roles = result[i];
