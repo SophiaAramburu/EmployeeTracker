@@ -7,3 +7,6 @@
 ## Installation 
 
 - Run npm start in terminal to start app. Run mysql -u root -p in terminal to run MySQL.
+
+
+![demo](./assets/Capture.PNG)
