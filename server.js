@@ -209,28 +209,21 @@ function userPrompt() {
                                     role_id
                                 }
     
-                                console.log(employee);
+                                db.query("INSERT INTO employee SET ?", employee, (err)=>{
+                                    if (err) {
+                                        console.log(err);
+                                        return err
+                                    }
+                                    console.log(`we added ${first_name} ${last_name} TO THE DATABASE`);
+                                    userPrompt();
+                                })
                             })
                         })
 
-                        
-                    //     for (var i = 0; i < result.length; i++) {
-                    //         if (result[i].title === answers.roles) {
-                    //             var roles = result[i];
-                    //         }
-                    //     }
-                    //     db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?)`, [answers.firstName, answers.lastName, answers.manager.id], (err, result) => {
-                    //         if (err) {
-                    //             console.log(err);
-                    //             return err;
-                    //         }
-                    //         console.log(`added ${answers.firstName} and ${answers.lastName} to db`)
-                    //         userPrompt();
-                    //     })
                     })
                 })
             } else if (answers.answers === 'Update Employee Role') {
-                db.query(`SELECT * FROM employee, roles`, (err, result) => {
+                db.query(`SELECT * FROM employee, role`, (err, result) => {
 
                     if (err) {
                         console.log(err);
@@ -275,7 +268,7 @@ function userPrompt() {
                                 var roles = result[i];
                             }
                         }
-                        db.query(`UPDATE employee SET ? WHERE ?`, [{ role_id: role }, { last_name: name }], (err, result) => {
+                        db.query(`UPDATE employee SET ? WHERE ?`, [{ role_id: roles }, { last_name: name }], (err, result) => {
                             if (err) {
                                 console.log(err);
                                 return err;
